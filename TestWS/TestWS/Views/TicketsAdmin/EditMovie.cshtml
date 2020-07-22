@@ -1,0 +1,44 @@
+﻿@using TestWS.Models.Tickets
+@using Type = TestWS.Models.Tickets.Type
+@model TestWS.Models.Tickets.Movie
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.Movies)
+}
+
+<h2>Edit Movie</h2>
+
+@using (Html.BeginForm("EditMovie", "TicketsAdmin"))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name)
+        @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description)
+        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.ImageURL)
+        @Html.EditorFor(x => x.ImageURL, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Duration)
+        @Html.EditorFor(x => x.Duration, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.MinAge)
+        @Html.EditorFor(x => x.MinAge, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Rating)
+        @Html.EditorFor(x => x.Rating, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    @Html.Partial("~/Views/Editors/Types.cshtml", Model.Types ?? Array.Empty<Type>());
+    @Html.Partial("~/Views/Editors/Genres.cshtml", Model.Genres ?? Array.Empty<Genre>());
+
+    <input class="btn btn-success" type="submit" value="Save changes" />
+}

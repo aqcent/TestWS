@@ -1,0 +1,55 @@
+﻿@using TestWS.Models.Tickets
+@model TestWS.Models.Tickets.TimeSlotGridRow[]
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.TimeSlots)
+}
+
+<h2 class="admin-heading">Time Slots</h2>
+
+<div class="admin-add-btn">
+    <a class="btn btn-default" href="@Url.Action("AddTimeSlot", "TicketsAdmin", null)">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add TimeSlot
+    </a>        
+</div>
+
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="col">ID</th>
+                <th class="col">Start Time</th>
+                <th class="col">Hall</th>
+                <th class="col">Movie</th>
+                <th class="col">Tariff</th>
+                <th class="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var timeslot in Model)
+            {
+                <tr>
+                    <td>@timeslot.ID</td>
+                    <td>@timeslot.StartTime</td>
+                    <td>@timeslot.HallName</td>
+                    <td>@timeslot.MovieName</td>
+                    <td>@timeslot.TariffName</td>
+                    <td class="col-lg-2">
+                        <div style="min-inline-size: max-content;">
+                            <div style="display: inline-block; width: calc(100% - 45px);">
+                                @Html.ActionLink("EDIT", "EditTimeSlot", "TicketsAdmin", new { timeslotID = timeslot.ID }, new { @class = "btn btn-primary admin-edit-btn" })
+                            </div>
+                            <div style="display: inline-block">
+                                <a class="btn btn-danger" href="@Url.Action("RemoveTimeSlot", "TicketsAdmin", new { timeslotID = timeslot.ID })">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

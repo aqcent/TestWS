@@ -1,0 +1,89 @@
+﻿
+<div class="row js-search-films">    
+        <div class="search-container col-sm-3">
+            <input class="search-input js-search-input" placeholder="Search..." />
+        </div>
+        <div class="search-btn col-sm-1">
+            <input class="btn btn-block btn-default js-btn-search" type="button" value="FIND"></input>
+        </div>    
+</div>
+<div class="js-elastic-search">
+    
+</div>
+
+<div class="js-elastic-search-template hidden">
+    <div class="list-group">
+        {{#each searchResults}}
+        <a class="list-group-item list-group-item-action js-list-item" href="{{mainUrl}}">{{name}}</a>        
+        {{/each}}
+    </div>
+</div>
+
+
+
+
+
+<div class="js-search-result">
+</div>
+
+<div class="js-search-results-template hidden">
+
+    {{#if searchResults}}
+
+    Search results ({{num}}):
+
+    {{#each searchResults}}
+    <div class="movie-list-section">
+
+        <div class="row">
+            <div class="col-md-3 movie-list-header">
+                <div class="name-movie-list">{{name}}</div>
+                <div class="rating-movie-list">Rating: {{rating}}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <img class="img-movie-list" src="{{imgUrl}}" />
+                </div>
+                <div class="movie-list-footer">
+                    <div class="genres-movie-list">
+                        <div>
+                            Genres..
+                        </div>
+                        <div>
+                            {{duration}}
+                        </div>
+                    </div>
+                    <div class="age-movie-list">
+                        {{minAge}}+
+                    </div>
+                </div>
+            </div>
+
+
+
+            {{#timeSlots}}
+            <div class="col-md-9">
+                {{#each this}}
+                <div class="timeslot-tag">
+                    <a class="btn btn-default btn-block" href="{{timeSlotURL}}">{{startTime}}</a>
+                    <span>{{cost}} ₽</span>
+                </div>
+                {{/each}}
+            </div>
+            {{/timeSlots}}
+        </div>
+    </div>
+    {{/each}}
+
+
+    {{else}}
+    <div>
+        No results.
+    </div>
+
+    {{/if}}
+</div>
+

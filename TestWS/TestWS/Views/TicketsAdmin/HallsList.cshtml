@@ -1,0 +1,50 @@
+﻿@using TestWS.Models.Tickets
+@model TestWS.Models.Tickets.Hall[]
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.Halls)
+}
+
+<h2 class="admin-heading">Halls</h2>
+
+<div class="admin-add-btn">
+    <a class="btn btn-default" href="@Url.Action("AddHall", "TicketsAdmin", null)">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add Hall
+    </a>
+</div>
+
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="col">ID</th>
+                <th class="col">Name</th>
+                <th class="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hall in Model)
+            {
+            <tr>
+                <td>@hall.Id</td>
+                <td>@hall.Name</td>
+                <td class="col-lg-2">
+                    <div style="min-inline-size: max-content;">
+                        <div style="display: inline-block; width: calc(100% - 45px);">
+                            @Html.ActionLink("EDIT", "EditHall", "TicketsAdmin", new { hallID = hall.Id }, new { @class = "btn btn-primary admin-edit-btn" })
+                        </div>
+                        <div style="display: inline-block">
+                            <a class="btn btn-danger" href="@Url.Action("RemoveHall", "TicketsAdmin", new { hallID = hall.Id })">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </td>                
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

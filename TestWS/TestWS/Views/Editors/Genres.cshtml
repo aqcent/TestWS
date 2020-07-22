@@ -1,0 +1,16 @@
+﻿@using TestWS.Utils
+@using TestWS.Models.Tickets
+@model Genre[]
+@{
+    var genres = EnumUtil.GetValues<Genre>();
+}
+
+<div class="form-group">
+    <label>Genres</label>
+    <select class="form-control" multiple name="Genres" id="Genres" >
+        @foreach (var genre in genres)
+        {
+            <option value="@genre" @(Model != null && Model.Contains(genre) ? "selected" : string.Empty)>@genre</option>
+        }
+    </select>
+</div>

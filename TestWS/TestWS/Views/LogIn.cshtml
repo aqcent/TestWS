@@ -1,0 +1,20 @@
+﻿@model TestWS.Models.LogIn
+
+@using (Html.BeginForm("LogIn", "Account"))
+{
+    <div>
+        @Html.LabelFor(model => model.Login)
+        @Html.EditorFor(model => model.Login)
+        @Html.ValidationMessageFor(model => model.Login)
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+
+    @Html.ValidationSummary()
+
+    <input type="submit" value="LOGIN">
+}
+

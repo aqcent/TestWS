@@ -1,0 +1,23 @@
+﻿@using TestWS.Utils
+@using TestWS.Models.Tickets
+@model int?
+@{
+    var moviesList = (Movie[])ViewData["MoviesList"];
+    var previousQuery = Request.UrlReferrer.Query;
+    int source;
+    var isParsedSource = int.TryParse(HttpUtility.ParseQueryString(previousQuery).Get("movieID"), out source);
+}
+
+<div class="form-group">
+    <label>Movie</label>
+    <select required class="form-control" name="MovieID" id="MovieID">
+        @if (moviesList != null)
+        {
+            <option hidden disabled selected></option>
+            foreach (var movie in moviesList)
+            {
+                <option value="@movie.Id" @(Model != null && movie.Id == Model || isParsedSource && movie.Id == source ? "selected" : string.Empty)>@movie.Name</option>
+            }
+        }
+    </select>
+</div>

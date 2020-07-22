@@ -1,0 +1,23 @@
+﻿@model TestWS.Models.Reports.SeatOccupancyReportForm
+
+
+<div class="form-group">
+    @Html.LabelFor(x => x.DateFrom)
+    <div class='input-group date' id='@Html.IdFor(x=>x.DateFrom)'>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <input type='text' name='@Html.NameFor(x=>x.DateFrom)' class="form-control" />
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.DateTo)
+    <div class='input-group date' id='@Html.IdFor(x=>x.DateTo)'>
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        <input type='text' name='@Html.NameFor(x=>x.DateTo)' class="form-control" />
+    </div>
+</div>
+

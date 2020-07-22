@@ -1,0 +1,44 @@
+﻿@using TestWS.Models.Tickets
+@model TestWS.Models.Tickets.Movie[]
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.Movies)
+}
+
+<h2 class="admin-heading">Movies List</h2>
+
+<div class="admin-add-btn">
+    <a class="btn btn-default" href="@Url.Action("AddMovie", "TicketsAdmin", null)">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add Movie
+    </a>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="col">ID</th>
+            <th class="col">Poster</th>
+            <th class="col">Name</th>
+            <th class="col">Description</th>
+            <th class="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Id</td>
+                <td><img style="max-height: 100px" src="@movie.ImageURL" /></td>
+                <td>@movie.Name</td>
+                <td>@movie.Description</td>
+                <td class="col-lg-2">
+                    @Html.ActionLink("Edit", "EditMovie", "TicketsAdmin", new { movieID = movie.Id }, new { @class = "btn btn-primary btn-block" })
+                    @Html.ActionLink("TimeSlots", "GetTimeSlotsListByMovieID", "TicketsAdmin", new { movieID = movie.Id }, new { @class = "btn btn-default btn-block" })
+                    @Html.ActionLink("Remove", "RemoveMovie", "TicketsAdmin", new { movieID = movie.Id }, new { @class = "btn btn-danger btn-block" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

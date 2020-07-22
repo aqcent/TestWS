@@ -1,0 +1,51 @@
+﻿@using TestWS.Models.Tickets
+@model TestWS.Models.Tickets.Tariff[]
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.Tariffs)
+}
+
+<h2 class="admin-heading">Tariffs List</h2>
+
+<div class="admin-add-btn">
+    <a class="btn btn-default" href="@Url.Action("AddTariff", "TicketsAdmin", null)">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add Tariff
+    </a>
+</div>
+
+<div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tariff in Model)
+            {
+            <tr>
+                <td>@tariff.Id</td>
+                <td>@tariff.Name</td>
+                <td>@tariff.Cost</td>
+                <td class="col-lg-2">
+                    <div style="min-inline-size: max-content;">
+                        <div style="display: inline-block; width: calc(100% - 45px);">
+                            @Html.ActionLink("EDIT", "EditTariff", "TicketsAdmin", new { tariffID = tariff.Id }, new { @class = "btn btn-primary admin-edit-btn" })
+                        </div>
+                        <div style="display: inline-block">
+                            <a class="btn btn-danger" href="@Url.Action("RemoveTariff", "TicketsAdmin", new { tariffID = tariff.Id })">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </td>                
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

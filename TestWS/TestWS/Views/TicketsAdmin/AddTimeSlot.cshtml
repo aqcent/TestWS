@@ -1,0 +1,39 @@
+﻿@using TestWS.Models.Tickets
+@model TestWS.Models.Tickets.TimeSlot
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.TimeSlots)
+}
+
+<h2>Add TimeSlot</h2>
+
+@using (Html.BeginForm("AddTimeSlot", "TicketsAdmin"))
+{
+    <div class="form-group">
+        <div class='input-group date' id='@Html.IdFor(x=>x.StartTime)'>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+            <input required type='text' name='@Html.NameFor(x=>x.StartTime)' class="form-control" />
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Editors/MoviesList.cshtml")
+    @Html.Partial("~/Views/Editors/HallsList.cshtml")
+    @Html.Partial("~/Views/Editors/TariffsList.cshtml")
+
+    <input class="btn btn-success" type="submit" value="Add TimeSlot" />
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#@Html.IdFor(x=>x.StartTime)').datetimepicker({
+                //maxDate: new Date(new Date().setDate(new Date().getDate())),
+                format: 'DD.MM.YYYY HH:mm'
+            });
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@using TestWS.Models.Reports
+@using TestWS.Utils
+@using TestWS.Models.Tickets
+
+@section SubNav
+{
+    @Html.Partial("~/Views/Shared/SubNavigation.cshtml", SubNavigationMenu.Reports)
+}
+
+<h2>Build report</h2>
+
+@{
+    var types = EnumUtil.GetValues<ReportType>();
+}
+
+
+@using (Html.BeginForm("BuildReport", "TicketsAdmin"))
+{
+    <div class="form-group">
+        <label>Type</label>
+        <select class="form-control js-report-selector" name="ReportType" id="ReportType">
+            <option value="" hidden disabled selected>Select report type</option>
+            @foreach (var type in types)
+            {
+                <option value="@type">@type</option>
+            }
+        </select>
+    </div>
+
+    <div class="js-report-form-container">
+
+    </div>
+
+    <input class="btn btn-success" type="submit" value="Build report" />
+}
+

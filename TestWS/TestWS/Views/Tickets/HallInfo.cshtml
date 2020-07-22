@@ -1,0 +1,76 @@
+﻿@model TestWS.Models.Tickets.HallInfo
+@{
+    int rows = 12;
+    int columns = 20;
+}
+
+@functions
+{
+    string CheckSeatClass(int row, int seat)
+    {
+        var matchingSeat = Model.RequestedSeats?.FirstOrDefault(x => x.Row == row && x.Seat == seat);
+        if (matchingSeat == null)
+            return string.Empty;
+
+        return matchingSeat.Status == TestWS.Models.Tickets.RequestStatus.Buy ? "is-sold" : "is-reserved";
+    }
+
+    string CheckSeatAvialability(int row, int seat)
+    {
+        var matchingSeat = Model.RequestedSeats?.FirstOrDefault(x => x.Row == row && x.Seat == seat);
+        if (matchingSeat == null)
+            return string.Empty;
+
+        return "disabled";
+    }
+}
+
+<h1>Select your seat</h1>
+<div class="row js-seat-container" 
+     data-current-cost="@Model.CurrentTariff.Cost.ToString("##.###")"
+     data-current-timeslot-id="@Model.CurrentTimeslotID">
+    <div class="col-md-10">
+        @for (int i = 1; i <= rows; i++)
+        {
+            <div class="cinema-row">
+                <div class="cinema-row-label">row @i</div>
+                @for (int j = 1; j <= columns; j++)
+                {
+                    <div class="cinema-seat @CheckSeatClass(i,j)">
+                        <input class="seat-input js-seat-selector"
+                               data-seat-row="@i" 
+                               data-seat-col="@j" 
+                               type="checkbox" 
+                               id="check-row@(i)-col@(j)" 
+                               @CheckSeatAvialability(i,j)/>
+                        <label class="seat-label" for="check-row@(i)-col@(j)"> @j </label>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="col-md-2">
+        Selected seats
+        <div class="js-seat-resoult">
+        </div>
+        <div class="btn btn-default btn-block js-reserv-seats">
+            RESERV
+        </div>
+        <div class="btn btn-success btn-block js-buy-seats">
+            BUY
+        </div>
+    </div>
+</div>
+
+<div class="js-selected-seat-template hidden">
+    {{#each addedSeats}}
+    <div>
+        Row: {{row}} Seat: {{seat}}
+    </div>
+    {{/each}}
+    {{#if addedSeats}}
+    <div>
+        Total: {{sum}}
+    </div>
+    {{/if}}
+</div>

@@ -1,0 +1,88 @@
+﻿@using TestWS.Extensions
+@model TestWS.Models.Tickets.MovieListItem[]
+
+<div class="bg">
+    @Html.Partial("~/Views/Shared/Searching.cshtml")
+
+
+    @foreach (var movieItem in Model)
+    {
+        <div class="movie-list-section">
+            <div class="row">
+                <div class="col-md-3 movie-list-header">
+                    <div class="name-movie-list">@movieItem.Movie.Name</div>
+                    <div class="rating-movie-list">Rating: @movieItem.Movie.Rating</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div>
+                        <img class="img-movie-list" src="@movieItem.Movie.ImageURL" />
+                    </div>
+                    <div class="movie-list-footer">
+                        <div class="genres-movie-list">
+                            <div>
+                                @string.Join(", ", movieItem.Movie.Genres)
+                            </div>
+                            <div>
+                                @movieItem.Movie.Duration.ToDuration()
+                            </div>
+                        </div>
+                        <div class="age-movie-list">
+                            @movieItem.Movie.MinAge+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    @foreach (var date in movieItem.AvailableTimeSlots.Select(x => x.StartTime.Date).OrderBy(x => x).Distinct())
+                    {
+                        <div class="timeslot-row">
+                            <div class="timeslot-date-label">@date.ToString("ddd") @date.ToString("dd/MM")</div>
+                            @foreach (var timeSlotTag in movieItem.AvailableTimeSlots.OrderBy(x => x.StartTime))
+                            {
+                                if (timeSlotTag.StartTime.Date == date)
+                                {
+                                    <div class="timeslot-tag">
+                                        <a class="btn btn-default btn-block timeslot-tag-js"
+                                           data-timeslotID="@timeSlotTag.TimeSlotID"
+                                           data-currentCost="@timeSlotTag.Cost"
+                                           data-imgurl="@movieItem.Movie.ImageURL">
+                                            @timeSlotTag.StartTime.ToShortTimeString()
+                                        </a>
+                                        <span>@($"{timeSlotTag.Cost.ToString("####")} ₽")</span>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="container-schedule">
+    <div class="cube">
+        <div class="side screen"></div>
+        <div class="side schedule-layout"></div>
+    </div>
+    <div class="close"><div class="cross"></div></div>
+    <div class="order-menu">
+        <div class="order-seats">
+            Selected seats:
+            <div class="selected-seats-row">
+            </div>
+        </div>
+        <div class="order-btn-block">
+            <div class="buy-btn">BUY</div>
+            <div class="reserve-btn">RESERVE</div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/buy-tickets.js"></script>
+}

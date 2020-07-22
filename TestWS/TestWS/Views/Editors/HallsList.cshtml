@@ -1,0 +1,20 @@
+﻿@using TestWS.Utils
+@using TestWS.Models.Tickets
+@model int?
+@{
+    var hallsList = (Hall[])ViewData["HallsList"];
+}
+
+<div class="form-group">
+    <label>Halls</label>
+    <select required class="form-control" name="HallID" id="HallID">
+        @if (hallsList != null)
+        {
+            <option hidden disabled selected></option>
+            foreach (var hall in hallsList)
+            {
+                <option value="@hall.Id" @(Model != null && hall.Id == Model ? "selected" : string.Empty)>@hall.Name</option>
+            }
+        }
+    </select>
+</div>
